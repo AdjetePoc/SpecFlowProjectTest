@@ -1,0 +1,27 @@
+name: My Target Workflow
+
+on: 
+  repository_dispatch:
+    types: [trigger-workflow]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.client_payload.sha }}
+        
+    #- name: Extract Serrvice name from the payload
+    #  run: |
+    #    service_name=${{ github.event.client_payload.service }}
+     #     echo "Service Name: $service_name"          
+      #  version=${{ github.event.client_payload.version }}
+      #    echo "Version: $version"
+          
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
